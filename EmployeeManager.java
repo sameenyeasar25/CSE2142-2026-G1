@@ -11,9 +11,7 @@ public class EmployeeManager {
         if (args[0].equals(Constants.LIST_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
-                String line = readEmployeesFromFile();
-                String[] employees = line.split(Constants.COMMA_DELIMITER);
-                for (String employee : employees) {
+                for (String employee : readEmployeesFromFile().split(Constants.COMMA_DELIMITER)) {
                     System.out.println(employee);
                 }
             } catch (Exception exception) {}
@@ -21,26 +19,20 @@ public class EmployeeManager {
         } else if (args[0].equals(Constants.SHOW_RANDOM_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
-                String line = readEmployeesFromFile();
-                System.out.println(line);
-                String[] employees = line.split(Constants.COMMA_DELIMITER);
-                Random random = new Random();
-                int randomIndex = random.nextInt(employees.length);
-                System.out.println(employees[randomIndex]);
+                String[] employees = readEmployeesFromFile().split(Constants.COMMA_DELIMITER);
+                System.out.println(employees[new Random().nextInt(employees.length)]);
             } catch (Exception exception) {}
             System.out.println(Constants.LOADED_MESSAGE);
         } else if (args[0].contains(Constants.ADD_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
-                String newEmployee = args[0].substring(1);
-                writeEmployeesToFile(Constants.COMMA_DELIMITER + newEmployee, true);
+                writeEmployeesToFile(Constants.COMMA_DELIMITER + args[0].substring(1), true);
             } catch (Exception exception) {}
             System.out.println(Constants.LOADED_MESSAGE);
         } else if (args[0].contains(Constants.SEARCH_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
-                String line = readEmployeesFromFile();
-                String[] employees = line.split(Constants.COMMA_DELIMITER);
+                String[] employees = readEmployeesFromFile().split(Constants.COMMA_DELIMITER);
                 boolean found = false;
                 String searchName = args[0].substring(1);
                 for (int i = 0; i < employees.length && !found; i++) {
@@ -54,8 +46,7 @@ public class EmployeeManager {
         } else if (args[0].contains(Constants.COUNT_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
-                String line = readEmployeesFromFile();
-                char[] characters = line.toCharArray();
+                char[] characters = readEmployeesFromFile().toCharArray();
                 boolean inWord = false;
                 int count = 0;
                 for (char character : characters) {
@@ -69,30 +60,25 @@ public class EmployeeManager {
                     }
                 }
                 System.out.println(count + " word(s) found " + characters.length);
-        } catch (Exception exception) {}
-        System.out.println(Constants.LOADED_MESSAGE);
-    } else if (args[0].contains(Constants.UPDATE_CMD)) {
-        System.out.println(Constants.LOADING_MESSAGE);
-        try {
-                String line = readEmployeesFromFile();
-                String[] employees = line.split(Constants.COMMA_DELIMITER);
-                String targetEmployee = args[0].substring(1);
+            } catch (Exception exception) {}
+            System.out.println(Constants.LOADED_MESSAGE);
+        } else if (args[0].contains(Constants.UPDATE_CMD)) {
+            System.out.println(Constants.LOADING_MESSAGE);
+            try {
+                String[] employees = readEmployeesFromFile().split(Constants.COMMA_DELIMITER);
                 for (int i = 0; i < employees.length; i++) {
-                    if (employees[i].equals(targetEmployee)) {
+                    if (employees[i].equals(args[0].substring(1))) {
                         employees[i] = Constants.UPDATED_LABEL;
                     }
                 }
                 writeEmployeesToFile(String.join(Constants.COMMA_DELIMITER, employees), false);
-        } catch (Exception exception) {}
-        System.out.println(Constants.UPDATED_MESSAGE);
-    } else if (args[0].contains(Constants.DELETE_CMD)) {
-        System.out.println(Constants.LOADING_MESSAGE);
-        try {
-                String line = readEmployeesFromFile();
-                String[] employees = line.split(Constants.COMMA_DELIMITER);
-                String targetEmployee = args[0].substring(1);
-                List<String> employeeList = new ArrayList<>(Arrays.asList(employees));
-                employeeList.remove(targetEmployee);
+            } catch (Exception exception) {}
+            System.out.println(Constants.UPDATED_MESSAGE);
+        } else if (args[0].contains(Constants.DELETE_CMD)) {
+            System.out.println(Constants.LOADING_MESSAGE);
+            try {
+                List<String> employeeList = new ArrayList<>(Arrays.asList(readEmployeesFromFile().split(Constants.COMMA_DELIMITER)));
+                employeeList.remove(args[0].substring(1));
                 writeEmployeesToFile(String.join(Constants.COMMA_DELIMITER, employeeList), false);
             } catch (Exception exception) {}
             System.out.println(Constants.DELETED_MESSAGE);
@@ -109,7 +95,7 @@ public class EmployeeManager {
 
     public static void writeEmployeesToFile(String content, boolean append) throws IOException {
         BufferedWriter writer = new BufferedWriter(
-                new FileWriter(Constants.FILE_NAME, append));
+            new FileWriter(Constants.FILE_NAME, append));
         writer.write(content);
         writer.close();
     }
