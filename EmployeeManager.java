@@ -32,14 +32,11 @@ public class EmployeeManager {
         } else if (args[0].contains(Constants.SEARCH_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
-                String[] employees = readEmployeesFromFile().split(Constants.COMMA_DELIMITER);
-                boolean found = false;
-                String searchName = args[0].substring(1);
-                for (int i = 0; i < employees.length && !found; i++) {
-                    if (employees[i].equals(searchName)) {
-                        System.out.println(Constants.EMPLOYEE_FOUND_MESSAGE);
-                        found = true;
-                    }
+                List<String> employees = Arrays.asList(readEmployeesFromFile().split(Constants.COMMA_DELIMITER));
+                if (employees.contains(args[0].substring(1))) {
+                    System.out.println(Constants.EMPLOYEE_FOUND_MESSAGE);
+                } else {
+                    System.out.println(Constants.EMPLOYEE_NOT_FOUND_MESSAGE);
                 }
             } catch (Exception exception) {}
             System.out.println(Constants.LOADED_MESSAGE);
