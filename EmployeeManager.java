@@ -20,7 +20,7 @@ public class EmployeeManager {
                     System.out.println(emp);
                 }
                 reader.close();
-            } catch (Exception employees) {}
+            } catch (Exception exception) {}
             System.out.println("Data Loaded.");
         } else if (args[0].equals("s")) {
             System.out.println("Loading data ...");
