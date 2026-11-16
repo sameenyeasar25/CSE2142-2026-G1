@@ -16,8 +16,8 @@ public class EmployeeManager {
                         new FileInputStream("employees.txt")));
                 String line = reader.readLine();
                 String employees[] = line.split(",");
-                for (String emp : employees) {
-                    System.out.println(emp);
+                for (String employee : employees) {
+                    System.out.println(employee);
                 }
                 reader.close();
             } catch (Exception exception) {}
@@ -31,8 +31,8 @@ public class EmployeeManager {
                 String line = reader.readLine();
                 System.out.println(line);
                 String employees[] = line.split(",");
-                Random rand = new Random();
-                int randomIndex = rand.nextInt(employees.length);
+                Random random = new Random();
+                int randomIndex = random.nextInt(employees.length);
                 System.out.println(employees[randomIndex]);
                 reader.close();
             } catch (Exception exception) {}
