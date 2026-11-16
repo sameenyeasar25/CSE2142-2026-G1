@@ -23,13 +23,13 @@ public class EmployeeManager {
                 System.out.println(employees[new Random().nextInt(employees.length)]);
             } catch (Exception exception) {}
             System.out.println(Constants.LOADED_MESSAGE);
-        } else if (args[0].contains(Constants.ADD_CMD)) {
+        } else if (args[0].startsWith(Constants.ADD_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
                 writeEmployeesToFile(Constants.COMMA_DELIMITER + args[0].substring(1), true);
             } catch (Exception exception) {}
             System.out.println(Constants.LOADED_MESSAGE);
-        } else if (args[0].contains(Constants.SEARCH_CMD)) {
+        } else if (args[0].startsWith(Constants.SEARCH_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
                 List<String> employees = Arrays.asList(readEmployeesFromFile().split(Constants.COMMA_DELIMITER));
@@ -40,7 +40,7 @@ public class EmployeeManager {
                 }
             } catch (Exception exception) {}
             System.out.println(Constants.LOADED_MESSAGE);
-        } else if (args[0].contains(Constants.COUNT_CMD)) {
+        } else if (args[0].equals(Constants.COUNT_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
                 String line = readEmployeesFromFile();
@@ -48,7 +48,7 @@ public class EmployeeManager {
                 System.out.println(employees.length + " employee(s) found " + line.length() + " character(s)");
             } catch (Exception exception) {}
             System.out.println(Constants.LOADED_MESSAGE);
-        } else if (args[0].contains(Constants.UPDATE_CMD)) {
+        } else if (args[0].startsWith(Constants.UPDATE_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
                 String[] employees = readEmployeesFromFile().split(Constants.COMMA_DELIMITER);
@@ -60,7 +60,7 @@ public class EmployeeManager {
                 writeEmployeesToFile(String.join(Constants.COMMA_DELIMITER, employees), false);
             } catch (Exception exception) {}
             System.out.println(Constants.UPDATED_MESSAGE);
-        } else if (args[0].contains(Constants.DELETE_CMD)) {
+        } else if (args[0].startsWith(Constants.DELETE_CMD)) {
             System.out.println(Constants.LOADING_MESSAGE);
             try {
                 List<String> employeeList = new ArrayList<>(Arrays.asList(readEmployeesFromFile().split(Constants.COMMA_DELIMITER)));
@@ -68,6 +68,8 @@ public class EmployeeManager {
                 writeEmployeesToFile(String.join(Constants.COMMA_DELIMITER, employeeList), false);
             } catch (Exception exception) {}
             System.out.println(Constants.DELETED_MESSAGE);
+        } else {
+            System.out.println(Constants.INVALID_ARG_MESSAGE);
         }
     }
     public static String readEmployeesFromFile() throws IOException {
